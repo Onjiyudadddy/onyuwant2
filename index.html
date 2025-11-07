@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Communication Board</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" role="application" aria-label="Communication board">
+      <header class="app__header">
+        <h1>How are you feeling?</h1>
+        <p>Select an icon to share what you need.</p>
+      </header>
+      <section class="app__buttons" aria-label="Communication options">
+        <button class="icon-button" data-message="I am happy" aria-label="Happy">
+          <span aria-hidden="true">😊</span>
+        </button>
+        <button class="icon-button" data-message="I want an apple" aria-label="Apple">
+          <span aria-hidden="true">🍎</span>
+        </button>
+        <button class="icon-button" data-message="I need the restroom" aria-label="Restroom">
+          <span aria-hidden="true">🚽</span>
+        </button>
+        <button class="icon-button" data-message="I am sad" aria-label="Sad">
+          <span aria-hidden="true">😢</span>
+        </button>
+      </section>
+      <section class="app__display" aria-live="polite" aria-atomic="true">
+        <p id="selected-message">Tap an icon to speak.</p>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
