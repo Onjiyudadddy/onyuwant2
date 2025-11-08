@@ -1,5 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onyu Communication Hub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-text">
+      <h1>Onyu Communication Hub</h1>
+      <p id="messageDisplay" aria-live="polite">Tap a card to share how you feel, what you need, or what comes next.</p>
+    </div>
+    <div class="header-actions">
+      <button class="add-global" id="openGlobalCreator" type="button" aria-haspopup="dialog">Create a custom card</button>
+      <div class="header-illustrations" aria-hidden="true">
+        <svg class="header-mascot cloud" viewBox="0 0 160 120" role="presentation">
+          <path d="M52 94c-22 0-40-16-40-36s18-36 40-36c3 0 6 0 9 1C65 11 80 0 98 0c21 0 38 15 38 34c15 2 26 14 26 28c0 16-14 30-32 30z" fill="#fde8ff" stroke="#d5b9ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="66" cy="66" r="6" fill="#6f5b8c"/>
+          <circle cx="94" cy="66" r="6" fill="#6f5b8c"/>
+          <path d="M68 82c6 6 20 6 26 0" fill="none" stroke="#f29bb2" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <svg class="header-mascot star" viewBox="0 0 140 140" role="presentation">
+          <path d="M70 6l16 38 42 6-30 28 8 40-36-20-36 20 8-40-30-28 42-6z" fill="#fff3c4" stroke="#f7d47c" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M50 84c6 10 34 10 40 0" fill="none" stroke="#f4a261" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="54" cy="66" r="6" fill="#735f4f"/>
+          <circle cx="86" cy="66" r="6" fill="#735f4f"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="board active" data-board="feelings" aria-labelledby="feelings-title">
+      <div class="board-header">
+        <h2 id="feelings-title">I am</h2>
+        <button class="add-card" data-board="feelings" type="button">+ Add your own</button>
+      </div>
+      <div class="card-grid" id="feelings-grid" role="list"></div>
+    </section>
+
+    <section class="board" data-board="needs" aria-labelledby="needs-title">
+      <div class="board-header">
+        <h2 id="needs-title">I want</h2>
+        <button class="add-card" data-board="needs" type="button">+ Add your own</button>
+      </div>
+      <div class="card-grid" id="needs-grid" role="list"></div>
+    </section>
+
+    <section class="board" data-board="schedule" aria-labelledby="schedule-title">
+      <div class="board-header">
+        <h2 id="schedule-title">Today's Schedule</h2>
+        <button class="add-card" data-board="schedule" type="button">+ Add schedule item</button>
+      </div>
+      <div class="schedule-area" id="schedule-list" aria-live="polite">
+        <p class="schedule-empty">Add activities to build today's plan.</p>
+      </div>
+    </section>
+
+    <section class="board" data-board="now-next" aria-labelledby="nownext-title">
+      <div class="board-header">
+        <h2 id="nownext-title">Now &amp; Next</h2>
+        <div class="now-next-actions">
+          <button class="set-slot" data-slot="now" type="button">Set Now</button>
+          <button class="set-slot" data-slot="next" type="button">Set Next</button>
+          <button class="clear-slots" type="button">Clear</button>
+        </div>
+      </div>
+      <div class="now-next-board" role="group" aria-label="Now and Next board">
+        <article class="now-next-card" data-slot="now">
+          <h3>Now</h3>
+          <div class="now-next-body" aria-live="polite">Tap to set</div>
+        </article>
+        <article class="now-next-card" data-slot="next">
+          <h3>Next</h3>
+          <div class="now-next-body" aria-live="polite">Tap to set</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="board" data-board="stories" aria-labelledby="stories-title">
+      <div class="board-header">
+        <h2 id="stories-title">Social Stories</h2>
+        <button class="add-card" data-board="stories" type="button">+ Create new story</button>
+      </div>
+      <div class="story-list" id="story-list" aria-live="polite">
+        <p class="story-empty">Create step-by-step stories to practise social skills.</p>
+      </div>
+    </section>
+
+    <section class="board" data-board="rewards" aria-labelledby="rewards-title">
+      <div class="board-header">
+        <h2 id="rewards-title">Rewards</h2>
+        <button class="add-card" data-board="rewards" type="button">+ Add reward</button>
+      </div>
+      <div class="card-grid" id="rewards-grid" role="list"></div>
+    </section>
+  </main>
+
+  <nav class="tab-bar" aria-label="Main navigation">
+    <button class="tab-button active" data-target="feelings" type="button"><span aria-hidden="true">😊</span> Feelings</button>
+    <button class="tab-button" data-target="needs" type="button"><span aria-hidden="true">🧃</span> Needs</button>
+    <button class="tab-button" data-target="schedule" type="button"><span aria-hidden="true">🗓️</span> Schedule</button>
+    <button class="tab-button" data-target="now-next" type="button"><span aria-hidden="true">⏭️</span> Now &amp; Next</button>
+    <button class="tab-button" data-target="stories" type="button"><span aria-hidden="true">📘</span> Stories</button>
+    <button class="tab-button" data-target="rewards" type="button"><span aria-hidden="true">⭐</span> Rewards</button>
+  </nav>
+
+  <div class="overlay hidden" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 id="customModalTitle">Create a custom card</h2>
+        <button class="close-modal" type="button" aria-label="Close">&times;</button>
+      </header>
+      <form class="modal-body" id="customCardForm">
+        <label class="field">
+          <span>Card title</span>
+          <input type="text" id="cardTitle" name="cardTitle" required maxlength="40" />
+        </label>
+
+        <fieldset class="field method-selector">
+          <legend>Choose how to add an image</legend>
+          <div class="method-buttons" role="tablist">
+            <button type="button" role="tab" aria-selected="true" data-method="upload">Upload</button>
+            <button type="button" role="tab" aria-selected="false" data-method="draw">Draw</button>
+            <button type="button" role="tab" aria-selected="false" data-method="ai">Ask AI</button>
+          </div>
+        </fieldset>
+
+        <div class="method-panel" data-panel="upload">
+          <label class="field">
+            <span>Select an image</span>
+            <input type="file" id="imageUpload" accept="image/*" />
+          </label>
+          <p class="hint">Use clear PECS style images for consistency.</p>
+        </div>
+
+        <div class="method-panel hidden" data-panel="draw">
+          <p class="hint">Draw a quick sketch to use on the card.</p>
+          <div class="drawing-tools">
+            <canvas id="drawingCanvas" width="240" height="180" aria-label="Drawing canvas"></canvas>
+            <div class="draw-controls">
+              <label>
+                Brush size
+                <input type="range" id="brushSize" min="2" max="20" value="6" />
+              </label>
+              <label>
+                Colour
+                <input type="color" id="brushColor" value="#0056d6" />
+              </label>
+              <button type="button" id="clearCanvas">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-panel hidden" data-panel="ai">
+          <label class="field">
+            <span>Describe the picture you need</span>
+            <textarea id="aiPrompt" rows="3" maxlength="120" placeholder="e.g. child playing on swings"></textarea>
+          </label>
+          <button type="button" id="generateAI" class="ai-generate">Generate placeholder</button>
+          <p class="hint">Use the prompt to request an illustration from your preferred AI art tool later.</p>
+        </div>
+
+        <div class="preview" id="cardPreview" aria-live="polite">Image preview will appear here.</div>
+
+        <footer class="modal-footer">
+          <button type="submit" class="primary">Save card</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="pickerModal" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 id="pickerTitle">Choose a card</h2>
+        <button class="close-picker" type="button" aria-label="Close">&times;</button>
+      </header>
+      <div class="modal-body">
+        <p class="hint">Select a card to place in the highlighted slot.</p>
+        <div class="card-grid picker-grid" id="pickerGrid" role="list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 id="storyModalTitle">Create a social story</h2>
+        <button class="close-story" type="button" aria-label="Close">&times;</button>
+      </header>
+      <form class="modal-body" id="storyForm">
+        <label class="field">
+          <span>Story title</span>
+          <input type="text" id="storyTitle" required maxlength="60" />
+        </label>
+        <label class="field">
+          <span>Steps (one per line)</span>
+          <textarea id="storySteps" rows="5" placeholder="First we...&#10;Then we..." required></textarea>
+        </label>
+        <footer class="modal-footer">
+          <button type="submit" class="primary">Save story</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="rewardModal" role="dialog" aria-modal="true" aria-labelledby="rewardModalTitle">
+    <div class="modal">
+      <header class="modal-header">
+        <h2 id="rewardModalTitle">Add a reward</h2>
+        <button class="close-reward" type="button" aria-label="Close">&times;</button>
+      </header>
+      <form class="modal-body" id="rewardForm">
+        <label class="field">
+          <span>Reward name</span>
+          <input type="text" id="rewardTitle" required maxlength="40" />
+        </label>
+        <label class="field">
+          <span>Describe or give points</span>
+          <textarea id="rewardNotes" rows="3" maxlength="120"></textarea>
+        </label>
+        <footer class="modal-footer">
+          <button type="submit" class="primary">Save reward</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
