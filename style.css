@@ -1,16 +1,18 @@
 :root {
   color-scheme: light;
   font-family: "Nunito", "Segoe UI", sans-serif;
-  --bg: #f7f8fb;
+  --bg: #f8f5ff;
+  --bg-soft: #fef8ff;
   --panel: #ffffff;
-  --border: #d8dde9;
-  --accent: #ffc400;
-  --accent-dark: #e5ad00;
-  --primary: #0050b3;
-  --primary-dark: #003c80;
-  --text: #1d2130;
-  --muted: #5b6273;
-  --shadow: 0 12px 28px rgba(17, 38, 146, 0.08);
+  --border: #d6ccff;
+  --accent: #ffd6e8;
+  --accent-dark: #ffbcd8;
+  --primary: #8f7bff;
+  --primary-dark: #6f5ae6;
+  --text: #3f3656;
+  --muted: #7b7293;
+  --shadow: 0 14px 36px rgba(123, 96, 255, 0.12);
+  --glow: 0 0 0 12px rgba(143, 123, 255, 0.08);
 }
 
 * {
@@ -21,7 +23,9 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: var(--bg);
+  background: radial-gradient(circle at 12% 24%, rgba(255, 214, 232, 0.35), transparent 45%),
+    radial-gradient(circle at 82% 18%, rgba(201, 231, 255, 0.45), transparent 50%),
+    var(--bg);
   color: var(--text);
 }
 
@@ -36,22 +40,47 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem clamp(1rem, 2vw, 2.5rem);
-  background: var(--panel);
+  background: linear-gradient(135deg, var(--panel), var(--bg-soft));
   box-shadow: var(--shadow);
   position: sticky;
   top: 0;
   z-index: 10;
+  border-radius: 0 0 32px 32px;
 }
 
 .header-text h1 {
   margin: 0;
   font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem);
+  letter-spacing: 0.02em;
 }
 
 .header-text p {
   margin: 0.35rem 0 0;
   color: var(--muted);
   font-size: clamp(0.95rem, 0.9rem + 0.4vw, 1.05rem);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  display: inline-flex;
+  box-shadow: var(--glow);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header-illustrations {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.header-mascot {
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 8px 18px rgba(143, 123, 255, 0.18));
 }
 
 .add-global {
@@ -63,18 +92,19 @@ body {
   font-size: 0.95rem;
   cursor: pointer;
   box-shadow: var(--shadow);
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .add-global:hover,
 .add-global:focus {
   background: var(--primary-dark);
   transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(111, 90, 230, 0.28);
 }
 
 main {
   flex: 1;
-  padding: 1.5rem clamp(1rem, 2vw, 2.5rem) 5.25rem;
+  padding: 1.75rem clamp(1rem, 2vw, 2.75rem) 5.5rem;
 }
 
 .board {
@@ -102,7 +132,7 @@ main {
 
 .add-card {
   background: var(--accent);
-  color: #2f2a14;
+  color: #574052;
   border: none;
   border-radius: 0.75rem;
   padding: 0.65rem 1.25rem;
@@ -110,13 +140,14 @@ main {
   font-size: 0.95rem;
   cursor: pointer;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .add-card:hover,
 .add-card:focus {
   background: var(--accent-dark);
   transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(255, 188, 216, 0.35);
 }
 
 .card-grid {
@@ -126,9 +157,9 @@ main {
 }
 
 .card {
-  background: var(--panel);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.65));
   border: 3px solid transparent;
-  border-radius: 1.25rem;
+  border-radius: 1.35rem;
   padding: 1.1rem;
   display: flex;
   flex-direction: column;
@@ -138,13 +169,31 @@ main {
   gap: 1rem;
   cursor: pointer;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255, 230, 255, 0.65), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 .card:focus,
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: var(--primary);
+  box-shadow: 0 16px 32px rgba(143, 123, 255, 0.2);
+}
+
+.card:focus::after,
+.card:hover::after {
+  opacity: 1;
 }
 
 .card img {
@@ -156,7 +205,7 @@ main {
 .card span {
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   color: var(--text);
 }
 
@@ -166,7 +215,7 @@ main {
 }
 
 .schedule-card {
-  background: var(--panel);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(252, 241, 255, 0.85));
   border-radius: 1rem;
   padding: 1rem 1.25rem;
   box-shadow: var(--shadow);
@@ -201,7 +250,7 @@ main {
 
 .schedule-empty,
 .story-empty {
-  background: none;
+  background: rgba(255, 255, 255, 0.6);
   border: 2px dashed var(--border);
   border-radius: 1rem;
   padding: 2.5rem 1.5rem;
@@ -217,7 +266,7 @@ main {
 }
 
 .now-next-card {
-  background: var(--panel);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(240, 233, 255, 0.9));
   border-radius: 1.5rem;
   padding: 1.5rem;
   display: flex;
@@ -266,23 +315,24 @@ main {
 
 .set-slot,
 .clear-slots {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 999px;
   padding: 0.55rem 1.25rem;
   border: 1px solid var(--border);
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .set-slot:hover,
 .clear-slots:hover {
-  background: #eef3ff;
+  background: #f0edff;
   border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(143, 123, 255, 0.18);
 }
 
 .story-card {
-  background: var(--panel);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(253, 236, 255, 0.9));
   border-radius: 1.25rem;
   padding: 1.25rem;
   box-shadow: var(--shadow);
@@ -303,7 +353,7 @@ main {
 }
 
 .reward-card {
-  background: var(--panel);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(235, 244, 255, 0.9));
   border-radius: 1.25rem;
   padding: 1rem;
   box-shadow: var(--shadow);
@@ -329,9 +379,9 @@ main {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 0.25rem;
-  background: var(--panel);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(244, 240, 255, 0.95));
   padding: 0.35rem;
-  box-shadow: 0 -4px 18px rgba(23, 34, 88, 0.12);
+  box-shadow: 0 -4px 24px rgba(68, 54, 104, 0.12);
 }
 
 .tab-button {
@@ -347,7 +397,7 @@ main {
   font-size: 0.8rem;
   color: var(--muted);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tab-button span {
@@ -355,8 +405,9 @@ main {
 }
 
 .tab-button.active {
-  background: #eef3ff;
+  background: rgba(143, 123, 255, 0.12);
   color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(143, 123, 255, 0.3);
 }
 
 .overlay {
@@ -375,7 +426,7 @@ main {
 }
 
 .modal {
-  background: var(--panel);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(252, 241, 255, 0.95));
   border-radius: 1.5rem;
   max-width: min(600px, 100%);
   width: 100%;
@@ -451,16 +502,17 @@ main {
   border-radius: 0.85rem;
   border: 1px solid var(--border);
   padding: 0.6rem;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   font-weight: 700;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .method-buttons button[aria-selected="true"] {
   border-color: var(--primary);
-  background: #eef3ff;
+  background: rgba(143, 123, 255, 0.12);
   color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(143, 123, 255, 0.18);
 }
 
 .method-panel.hidden {
@@ -508,7 +560,7 @@ main {
 }
 
 .drawing-tools {
-  background: #f0f4ff;
+  background: rgba(239, 232, 255, 0.8);
   border-radius: 1.25rem;
   padding: 1rem;
   display: grid;
@@ -518,7 +570,7 @@ main {
 #drawingCanvas {
   width: 100%;
   border-radius: 1rem;
-  border: 2px dashed rgba(0, 80, 179, 0.3);
+  border: 2px dashed rgba(143, 123, 255, 0.4);
   background: #fff;
 }
 
@@ -563,6 +615,15 @@ main {
 
   .add-global {
     width: 100%;
+  }
+
+  .header-actions {
+    justify-content: space-between;
+  }
+
+  .header-mascot {
+    width: 56px;
+    height: 56px;
   }
 
   main {

@@ -42,11 +42,11 @@ const boardConfigs = {
   feelings: {
     element: document.getElementById('feelings-grid'),
     cards: [
-      makeCardData('Happy', makeFaceSVG('#ffd966', '#ffb900', '#ff5d00', 'smile')),
-      makeCardData('Sad', makeFaceSVG('#9fd5ff', '#60a8ff', '#1f5bff', 'frown')),
-      makeCardData('Tired', makeFaceSVG('#c9b9f9', '#8f7cf0', '#5a4bc8', 'sleepy')),
-      makeCardData('Bored', makeFaceSVG('#fed9b7', '#f98f6f', '#c75b38', 'flat')),
-      makeCardData('Hurt', makeFaceSVG('#ffb7c3', '#ff728d', '#e61a44', 'band'))
+      makeCardData('Happy', makeFaceSVG('#ffe8b5', '#ffd58f', '#ffaf87', 'smile')),
+      makeCardData('Sad', makeFaceSVG('#d9ecff', '#aaccff', '#6b87d6', 'frown')),
+      makeCardData('Tired', makeFaceSVG('#ece4ff', '#cbbdff', '#8d82ff', 'sleepy')),
+      makeCardData('Bored', makeFaceSVG('#ffe0d2', '#ffbfa5', '#f49f85', 'flat')),
+      makeCardData('Hurt', makeFaceSVG('#ffdbe8', '#ffb3cd', '#f284b6', 'band'))
     ]
   },
   needs: {
@@ -346,16 +346,16 @@ function generateAIPlaceholder(prompt) {
   canvas.height = 360;
   const context = canvas.getContext('2d');
   const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
-  gradient.addColorStop(0, '#ffe082');
-  gradient.addColorStop(1, '#ffab40');
+  gradient.addColorStop(0, '#f7e6ff');
+  gradient.addColorStop(1, '#ffe7f1');
   context.fillStyle = gradient;
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = 'rgba(255,255,255,0.85)';
+  context.fillStyle = 'rgba(255,255,255,0.86)';
   context.fillRect(24, 24, canvas.width - 48, canvas.height - 48);
-  context.fillStyle = '#ff6f00';
+  context.fillStyle = '#8f7bff';
   context.font = 'bold 52px "Nunito"';
   context.fillText('AI', 36, 80);
-  context.fillStyle = '#333';
+  context.fillStyle = '#5a5078';
   context.font = 'bold 32px "Nunito"';
   wrapText(context, prompt, 36, 140, canvas.width - 72, 42);
   return canvas.toDataURL('image/png');
@@ -677,8 +677,8 @@ function makeSceneSVG(type) {
   frame.setAttribute('width', '200');
   frame.setAttribute('height', '200');
   frame.setAttribute('rx', '26');
-  frame.setAttribute('fill', '#fff');
-  frame.setAttribute('stroke', '#0050b3');
+  frame.setAttribute('fill', '#ffffff');
+  frame.setAttribute('stroke', '#8f7bff');
   frame.setAttribute('stroke-width', '8');
   svg.appendChild(frame);
 
@@ -704,7 +704,7 @@ function addPlaygroundScene(svg) {
   sky.setAttribute('y', '28');
   sky.setAttribute('width', '152');
   sky.setAttribute('height', '90');
-  sky.setAttribute('fill', '#c4e7ff');
+  sky.setAttribute('fill', '#dceeff');
   svg.appendChild(sky);
 
   const ground = document.createElementNS(ns, 'rect');
@@ -712,12 +712,12 @@ function addPlaygroundScene(svg) {
   ground.setAttribute('y', '118');
   ground.setAttribute('width', '152');
   ground.setAttribute('height', '58');
-  ground.setAttribute('fill', '#9bd67a');
+  ground.setAttribute('fill', '#d8f2da');
   svg.appendChild(ground);
 
   const frame = document.createElementNS(ns, 'path');
   frame.setAttribute('d', 'M60 40 L40 180 M140 40 L160 180 M40 180 L160 180');
-  frame.setAttribute('stroke', '#f57c00');
+  frame.setAttribute('stroke', '#ffb7c5');
   frame.setAttribute('stroke-width', '10');
   frame.setAttribute('fill', 'none');
   svg.appendChild(frame);
@@ -727,14 +727,21 @@ function addPlaygroundScene(svg) {
   seat.setAttribute('y', '92');
   seat.setAttribute('width', '36');
   seat.setAttribute('height', '28');
-  seat.setAttribute('fill', '#ff5252');
+  seat.setAttribute('fill', '#ff8fab');
   svg.appendChild(seat);
 
   const ropes = document.createElementNS(ns, 'path');
   ropes.setAttribute('d', 'M82 42 L82 102 M118 42 L118 102');
-  ropes.setAttribute('stroke', '#5d4037');
+  ropes.setAttribute('stroke', '#b38b6d');
   ropes.setAttribute('stroke-width', '6');
   svg.appendChild(ropes);
+
+  const sun = document.createElementNS(ns, 'circle');
+  sun.setAttribute('cx', '48');
+  sun.setAttribute('cy', '58');
+  sun.setAttribute('r', '12');
+  sun.setAttribute('fill', '#ffe29d');
+  svg.appendChild(sun);
 }
 
 function addSnackScene(svg) {
@@ -744,19 +751,19 @@ function addSnackScene(svg) {
   plate.setAttribute('cy', '135');
   plate.setAttribute('rx', '74');
   plate.setAttribute('ry', '28');
-  plate.setAttribute('fill', '#f0f4ff');
-  plate.setAttribute('stroke', '#8fa3d8');
+  plate.setAttribute('fill', '#f7f4ff');
+  plate.setAttribute('stroke', '#d2c2ff');
   plate.setAttribute('stroke-width', '6');
   svg.appendChild(plate);
 
   const apple = document.createElementNS(ns, 'path');
   apple.setAttribute('d', 'M82 88 C62 88 54 112 68 132 C74 140 96 150 106 140 C124 150 146 134 140 114 C136 94 114 78 98 86 Z');
-  apple.setAttribute('fill', '#ff4d4f');
+  apple.setAttribute('fill', '#ff9fb2');
   svg.appendChild(apple);
 
   const leaf = document.createElementNS(ns, 'path');
   leaf.setAttribute('d', 'M108 72 C124 62 136 66 144 80 C126 80 118 76 108 72');
-  leaf.setAttribute('fill', '#4caf50');
+  leaf.setAttribute('fill', '#8fcaa9');
   svg.appendChild(leaf);
 
   const drink = document.createElementNS(ns, 'rect');
@@ -764,10 +771,17 @@ function addSnackScene(svg) {
   drink.setAttribute('y', '64');
   drink.setAttribute('width', '32');
   drink.setAttribute('height', '70');
-  drink.setAttribute('fill', '#9ad7ff');
-  drink.setAttribute('stroke', '#3f51b5');
+  drink.setAttribute('fill', '#c9ecff');
+  drink.setAttribute('stroke', '#8db6f4');
   drink.setAttribute('stroke-width', '6');
   svg.appendChild(drink);
+
+  const biscuit = document.createElementNS(ns, 'circle');
+  biscuit.setAttribute('cx', '70');
+  biscuit.setAttribute('cy', '118');
+  biscuit.setAttribute('r', '16');
+  biscuit.setAttribute('fill', '#ffe8cc');
+  svg.appendChild(biscuit);
 }
 
 function addMealScene(svg) {
@@ -776,29 +790,37 @@ function addMealScene(svg) {
   plate.setAttribute('cx', '100');
   plate.setAttribute('cy', '108');
   plate.setAttribute('r', '68');
-  plate.setAttribute('fill', '#fff9c4');
-  plate.setAttribute('stroke', '#f57c00');
+  plate.setAttribute('fill', '#fff5d6');
+  plate.setAttribute('stroke', '#f7c26c');
   plate.setAttribute('stroke-width', '6');
   svg.appendChild(plate);
 
   const spoon = document.createElementNS(ns, 'path');
   spoon.setAttribute('d', 'M48 60 C62 50 82 52 82 72 C82 90 68 100 48 86 L48 148 Q48 156 38 156 Q28 156 28 148 L28 86');
-  spoon.setAttribute('fill', '#cfd8dc');
+  spoon.setAttribute('fill', '#dcd6f7');
   svg.appendChild(spoon);
 
   const fork = document.createElementNS(ns, 'path');
   fork.setAttribute('d', 'M150 52 L150 148 Q150 158 160 158 Q170 158 170 148 L170 52');
-  fork.setAttribute('stroke', '#cfd8dc');
+  fork.setAttribute('stroke', '#dcd6f7');
   fork.setAttribute('stroke-width', '12');
   fork.setAttribute('fill', 'none');
   svg.appendChild(fork);
 
   const meal = document.createElementNS(ns, 'path');
   meal.setAttribute('d', 'M74 110 Q100 136 126 110');
-  meal.setAttribute('stroke', '#ffa000');
+  meal.setAttribute('stroke', '#f4a259');
   meal.setAttribute('stroke-width', '10');
   meal.setAttribute('fill', 'none');
   svg.appendChild(meal);
+
+  const steam = document.createElementNS(ns, 'path');
+  steam.setAttribute('d', 'M94 74 Q100 60 108 72');
+  steam.setAttribute('stroke', '#f4a259');
+  steam.setAttribute('stroke-width', '6');
+  steam.setAttribute('fill', 'none');
+  steam.setAttribute('stroke-linecap', 'round');
+  svg.appendChild(steam);
 }
 
 function addHomeScene(svg) {
@@ -808,14 +830,14 @@ function addHomeScene(svg) {
   house.setAttribute('y', '94');
   house.setAttribute('width', '96');
   house.setAttribute('height', '78');
-  house.setAttribute('fill', '#ffecb3');
-  house.setAttribute('stroke', '#ff9800');
+  house.setAttribute('fill', '#ffeedd');
+  house.setAttribute('stroke', '#f5b79d');
   house.setAttribute('stroke-width', '6');
   svg.appendChild(house);
 
   const roof = document.createElementNS(ns, 'path');
   roof.setAttribute('d', 'M40 100 L100 46 L160 100 Z');
-  roof.setAttribute('fill', '#f44336');
+  roof.setAttribute('fill', '#ff9aae');
   svg.appendChild(roof);
 
   const door = document.createElementNS(ns, 'rect');
@@ -823,7 +845,7 @@ function addHomeScene(svg) {
   door.setAttribute('y', '126');
   door.setAttribute('width', '28');
   door.setAttribute('height', '46');
-  door.setAttribute('fill', '#8d6e63');
+  door.setAttribute('fill', '#c19988');
   svg.appendChild(door);
 
   const window = document.createElementNS(ns, 'rect');
@@ -831,12 +853,17 @@ function addHomeScene(svg) {
   window.setAttribute('y', '116');
   window.setAttribute('width', '24');
   window.setAttribute('height', '24');
-  window.setAttribute('fill', '#bbdefb');
+  window.setAttribute('fill', '#d7ecff');
   svg.appendChild(window);
 
   const window2 = window.cloneNode();
   window2.setAttribute('x', '116');
   svg.appendChild(window2);
+
+  const heart = document.createElementNS(ns, 'path');
+  heart.setAttribute('d', 'M100 72 C88 60 66 64 66 86 C66 108 100 126 100 126 C100 126 134 108 134 86 C134 64 112 60 100 72 Z');
+  heart.setAttribute('fill', 'rgba(255, 155, 170, 0.35)');
+  svg.appendChild(heart);
 }
 
 function addToiletScene(svg) {
@@ -846,7 +873,7 @@ function addToiletScene(svg) {
   tank.setAttribute('y', '60');
   tank.setAttribute('width', '64');
   tank.setAttribute('height', '32');
-  tank.setAttribute('fill', '#b2ebf2');
+  tank.setAttribute('fill', '#d7f4f6');
   svg.appendChild(tank);
 
   const bowl = document.createElementNS(ns, 'rect');
@@ -854,8 +881,8 @@ function addToiletScene(svg) {
   bowl.setAttribute('y', '94');
   bowl.setAttribute('width', '64');
   bowl.setAttribute('height', '70');
-  bowl.setAttribute('fill', '#e0f7fa');
-  bowl.setAttribute('stroke', '#00acc1');
+  bowl.setAttribute('fill', '#eefbff');
+  bowl.setAttribute('stroke', '#8ccfd6');
   bowl.setAttribute('stroke-width', '8');
   svg.appendChild(bowl);
 
@@ -863,7 +890,7 @@ function addToiletScene(svg) {
   flush.setAttribute('cx', '134');
   flush.setAttribute('cy', '74');
   flush.setAttribute('r', '8');
-  flush.setAttribute('fill', '#00acc1');
+  flush.setAttribute('fill', '#8ccfd6');
   svg.appendChild(flush);
 
   const base = document.createElementNS(ns, 'rect');
@@ -871,8 +898,13 @@ function addToiletScene(svg) {
   base.setAttribute('y', '162');
   base.setAttribute('width', '32');
   base.setAttribute('height', '18');
-  base.setAttribute('fill', '#b2ebf2');
+  base.setAttribute('fill', '#d7f4f6');
   svg.appendChild(base);
+
+  const sparkle = document.createElementNS(ns, 'path');
+  sparkle.setAttribute('d', 'M140 120 L146 132 L160 134 L148 142 L150 156 L140 148 L130 156 L132 142 L120 134 L134 132 Z');
+  sparkle.setAttribute('fill', 'rgba(143, 123, 255, 0.25)');
+  svg.appendChild(sparkle);
 }
 
 function svgToDataURL(svg) {
