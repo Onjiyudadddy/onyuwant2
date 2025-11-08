@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEN Story & Reward Companion</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand">
+      <h1>SEN Story &amp; Reward Companion</h1>
+      <p class="tagline">Create visual routines and link them to motivating rewards.</p>
+    </div>
+    <div class="mode-toggle" role="group" aria-label="Switch main view">
+      <button class="mode-button active" data-target="story-view" type="button">Social Stories</button>
+      <button class="mode-button" data-target="reward-view" type="button">Rewards</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="story-view" class="view active" aria-labelledby="story-title">
+      <div class="panel">
+        <header class="panel-header">
+          <h2 id="story-title">Social Story Generator</h2>
+          <p>Create 3–6 visual cards that explain a routine or situation using PECS inspired art.</p>
+        </header>
+        <form id="storyForm" class="story-form" novalidate>
+          <label class="field">
+            <span>Story title</span>
+            <input type="text" id="storyTitle" name="storyTitle" maxlength="60" placeholder="e.g. Toilet routine" required />
+          </label>
+          <label class="field">
+            <span>Describe the situation</span>
+            <textarea id="storyInput" name="storyInput" rows="4" placeholder="Type or dictate what should happen. e.g. When you need to pee, go to the toilet, sit down, wipe and flush." required></textarea>
+          </label>
+          <div class="input-actions">
+            <button type="button" id="dictateButton" class="secondary">🎤 Speak instead</button>
+            <div class="dictate-status" id="dictateStatus" aria-live="polite"></div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="primary">Generate story</button>
+            <button type="button" id="clearStory" class="ghost">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <header class="panel-header">
+          <h3>Story cards</h3>
+          <div class="story-controls">
+            <div class="view-toggle" role="group" aria-label="Toggle preview and play modes">
+              <button type="button" class="view-button active" data-mode="preview">Preview mode</button>
+              <button type="button" class="view-button" data-mode="play">Play mode</button>
+            </div>
+            <button type="button" id="speakStory" class="secondary" disabled>🔊 Play all</button>
+            <button type="button" id="saveStory" class="primary" disabled>Save story</button>
+          </div>
+        </header>
+
+        <div class="card-slider" aria-live="polite">
+          <button class="slider-nav" id="prevCard" type="button" aria-label="Previous card" disabled>‹</button>
+          <div class="card-window">
+            <div class="card-track" id="storyTrack"></div>
+          </div>
+          <button class="slider-nav" id="nextCard" type="button" aria-label="Next card" disabled>›</button>
+        </div>
+        <p class="slider-indicator" id="cardIndicator">Create a story to begin.</p>
+      </div>
+
+      <div class="panel">
+        <header class="panel-header">
+          <h3>Saved stories</h3>
+          <p>Reuse stories for consistent routines and link them with rewards.</p>
+        </header>
+        <div id="storyLibrary" class="library" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="reward-view" class="view" aria-labelledby="reward-title">
+      <div class="panel">
+        <header class="panel-header">
+          <h2 id="reward-title">Reward System</h2>
+          <p>Motivate progress by connecting rewards to a saved social story.</p>
+        </header>
+        <form id="rewardForm" class="reward-form" novalidate>
+          <label class="field">
+            <span>Reward title</span>
+            <input type="text" id="rewardTitle" name="rewardTitle" maxlength="60" placeholder="e.g. Extra playground time" required />
+          </label>
+
+          <label class="field">
+            <span>Linked story</span>
+            <select id="rewardStory" name="rewardStory" required>
+              <option value="" disabled selected>Select a saved story</option>
+            </select>
+          </label>
+
+          <fieldset class="field">
+            <legend>Reward image</legend>
+            <div class="reward-image-picker" role="group" aria-label="Choose a reward image">
+              <div class="preset-images" id="presetImages"></div>
+              <label class="upload">
+                <input type="file" id="rewardImageUpload" accept="image/*" />
+                <span>Upload image</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="field grid">
+            <label>
+              <span>Sticker target</span>
+              <input type="number" id="rewardTarget" name="rewardTarget" min="1" max="10" value="3" required />
+            </label>
+            <label>
+              <span>Time frame <small>(optional)</small></span>
+              <select id="rewardTimeframe" name="rewardTimeframe">
+                <option value="">No time limit</option>
+                <option value="daily">Per day</option>
+                <option value="weekly">Per week</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary">Create reward</button>
+            <button type="button" id="clearReward" class="ghost">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <header class="panel-header">
+          <h3>Active rewards</h3>
+          <p>Tap a star when the linked story is completed to move towards the reward.</p>
+        </header>
+        <div id="rewardList" class="reward-list" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="celebration" class="celebration hidden" aria-live="assertive" role="alert">
+    <div class="celebration-card">
+      <div class="confetti" aria-hidden="true"></div>
+      <img id="celebrationImage" alt="Reward" />
+      <h2>Great job!</h2>
+      <p id="celebrationMessage"></p>
+      <button type="button" id="closeCelebration" class="primary">Keep going</button>
+    </div>
+  </div>
+
+  <template id="storyCardTemplate">
+    <article class="story-card" role="group">
+      <div class="story-icon"></div>
+      <p class="story-text"></p>
+    </article>
+  </template>
+
+  <template id="rewardCardTemplate">
+    <article class="reward-card">
+      <header class="reward-card-header">
+        <div class="reward-icon"></div>
+        <div>
+          <h4 class="reward-title"></h4>
+          <p class="reward-story"></p>
+        </div>
+      </header>
+      <div class="reward-progress"></div>
+      <footer class="reward-actions">
+        <button type="button" class="secondary add-sticker">Add sticker</button>
+        <button type="button" class="ghost reset-reward">Reset</button>
+      </footer>
+    </article>
+  </template>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
