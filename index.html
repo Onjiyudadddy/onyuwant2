@@ -231,4 +231,75 @@
 
   <script src="script.js"></script>
 </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onyu Communication Board</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" role="application" aria-label="Communication board">
+      <header class="app__header">
+        <h1>Onyu Want</h1>
+        <p>Select an icon to share how Onyu communicates.</p>
+      </header>
+
+      <section class="board" aria-label="Needs choices">
+        <h2 class="board__title">Onyu Want</h2>
+        <div class="board__buttons">
+          <button
+            class="icon-button"
+            data-message="Outside play"
+            aria-label="Outside play"
+          >
+            <span aria-hidden="true">🛝</span>
+            <span class="icon-button__text">Outside Play</span>
+          </button>
+          <button class="icon-button" data-message="Snack" aria-label="Snack">
+            <span aria-hidden="true">🍪</span>
+            <span class="icon-button__text">Snack</span>
+          </button>
+          <button class="icon-button" data-message="Hungry" aria-label="Hungry">
+            <span aria-hidden="true">🍚</span>
+            <span class="icon-button__text">Hungry</span>
+          </button>
+          <button class="icon-button" data-message="House" aria-label="House">
+            <span aria-hidden="true">🏠</span>
+            <span class="icon-button__text">House</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="board" aria-label="Feelings choices">
+        <h2 class="board__title">Onyu Is</h2>
+        <div class="board__buttons">
+          <button class="icon-button" data-message="Happy" aria-label="Happy">
+            <span aria-hidden="true">😊</span>
+            <span class="icon-button__text">Happy</span>
+          </button>
+          <button class="icon-button" data-message="Sad" aria-label="Sad">
+            <span aria-hidden="true">😢</span>
+            <span class="icon-button__text">Sad</span>
+          </button>
+          <button class="icon-button" data-message="Tired" aria-label="Tired">
+            <span aria-hidden="true">😴</span>
+            <span class="icon-button__text">Tired</span>
+          </button>
+          <button class="icon-button" data-message="Bored" aria-label="Bored">
+            <span aria-hidden="true">😐</span>
+            <span class="icon-button__text">Bored</span>
+          </button>
+          <button class="icon-button" data-message="Hurt" aria-label="Hurt">
+            <span aria-hidden="true">🤕</span>
+            <span class="icon-button__text">Hurt</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="app__display" aria-live="polite" aria-atomic="true">
+        <p id="selected-message">Tap an icon to speak.</p>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>
